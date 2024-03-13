@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'landing_page',
     'rest_framework',
     'corsheaders',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
