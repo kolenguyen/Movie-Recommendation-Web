@@ -12,3 +12,19 @@ Movies and TV series are two of the most common and enjoyable forms of entertain
 * Testing: Postman
 * Deployment/ Hosting: Heroku 
 * Version Control: GitHub
+
+# For Team Members:
+
+Before running anything, please activate virtual environment 
+* myenv\Scripts\activate on Windows
+* source myenv/bin/activate
+
+This is helpful because if you install any Python dependencies, you can export it to requirements.txt and everyone can update accordingly. 
+
+For your information: 
+* movie_rec is the backend Django directory. Inside, we have an app called landing_page, which is responsible for any functionality for landing page. To run backend server, change directory to movie_rec and run python manage.py runserver. 
+** cors_headers is installed
+** djangorestframework is installed
+** api is not created
+** views and urls are not updated
+* react_app is the frontend directory. To run it, change directory to react_app and run npm start
