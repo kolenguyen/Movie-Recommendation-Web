@@ -1,4 +1,3 @@
-// App.js
 import React, { useState } from 'react';
 import Login from './Login';
 import Signup from './Signup';
@@ -20,7 +19,7 @@ const App = () => {
       )}
       <div className="toggle-text-container">
         <p className="toggle-text" onClick={toggleForm}>
-          {showLogin ? 'New to Netflix? Sign up now.' : 'Already have an account? Sign in now.'}
+          {showLogin ? 'New user? Sign up now.' : 'Already have an account? Sign in now.'}
         </p>
       </div>
     </div>
