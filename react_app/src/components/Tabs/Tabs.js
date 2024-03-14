@@ -51,7 +51,7 @@ const Tabs = ({activeTabName, onClickTab}) => {
                                 <p className='text-ig'>
                                     Personalized suggestions — discovered through the things you already love!
                                 </p>
-                                <Link to="/signin" className='btn btn-lg'>
+                                <Link to="/netflix-show" className='btn btn-lg'>
                                     Ready to Binge
                                 </Link>
                             </div>
@@ -69,7 +69,7 @@ const Tabs = ({activeTabName, onClickTab}) => {
                             <p className='text-ig'>
                                 Find Movies right from old classics to newest blockbuster to fit your mood and choices.
                             </p>
-                            <Link to='/signin' className='btn btn-lg'>
+                            <Link to='/netflix-show' className='btn btn-lg'>
                                 Ready to Binge
                             </Link>
                         </div>
@@ -113,7 +113,7 @@ const Tabs = ({activeTabName, onClickTab}) => {
                                 Guess What? 
                                 It's free of cost 
                             </p>
-                            <Link to='/signin' className='btn btn-lg'>Ready to Binge</Link>
+                            <Link to='/netflix-show' className='btn btn-lg'>Ready to Binge</Link>
                         </div>
                         <div>
                             <img src='https://cdn.vox-cdn.com/thumbor/-_58CyCjSLS36byYJ3jyjvy4Akg=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/9871033/Movies_end_of_year_2017.jpg' alt=''/>
