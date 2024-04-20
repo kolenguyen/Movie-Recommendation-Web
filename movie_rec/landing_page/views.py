@@ -85,30 +85,48 @@ class returnMoviesFromGenreView(APIView):
         # movies = models.Movie.objects.all()
         # print(request.body)
         data = json.loads(request.body)
-        title = data.get('title')
-        print(title)
+        genres = data.get('genres')
+        imdb = data.get('rating')
+        print(genres)
+        print(imdb)
         try:
-            current_movie = Movie.objects.filter(title=title).first()
-            genres = [genre.name for genre in current_movie.genre.all()]
-            print(genres)
             movies = Movie.objects.all() 
+            if genres and imdb is None:
+                return Response({'error': 'Genre and imdb not found'}, status=status.HTTP_404_NOT_FOUND)
+            if imdb is not None:
+                movies = movies.filter(imdb__gt=imdb)
             for genre in genres:
+                print(genre)
                 movies = movies.filter(genre__name=genre)
 
+            print(movies)
+            # current_movie = Movie.objects.filter(title=title).first()
+            # genres = [genre.name for genre in current_movie.genre.all()]
+            # print(genres)
+            # movies = Movie.objects.all() 
+            # for genre in genres:
+                # movies = movies.filter(genre__name=genre)
+
             # Serialize movie data with genre details
-            serialized_movies = []
+            returned_movies = []
+            unique_movies = set()
             for movie in movies:
-                movie_data = {
-                    'title': movie.title,
-                    'url':movie.poster,
-                    'director': movie.director,
-                    'imdb':movie.imdb,
-                    'overview':movie.overview,
-                    'year': movie.year,
-                    'genres': [genre.name for genre in movie.genre.all()]  # Get genre names associated with the movie
-                }
-            serialized_movies.append(movie_data)
-            return Response({'movies': serialized_movies}, status=status.HTTP_200_OK)
+               movie_key = (movie.title, movie.director)
+               if movie_key not in unique_movies:
+                    movie_data = {
+                        'title': movie.title,
+                        'url': movie.poster,
+                        'director': movie.director,
+                        'imdb': movie.imdb,
+                        'overview': movie.overview,
+                        'year': movie.year,
+                        'genres': [genre.name for genre in movie.genre.all()]  # Get genre names associated with the movie
+                    }
+                    returned_movies.append(movie_data)
+                    
+                    # Add the movie title to the set of seen titles
+                    unique_movies.add(movie_key)
+            return Response({'movies':returned_movies}, status=status.HTTP_200_OK)
         
         except Movie.DoesNotExist:
             return Response({'error': 'Movie not found'}, status=status.HTTP_404_NOT_FOUND)
