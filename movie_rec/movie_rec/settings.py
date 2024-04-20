@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-wn#*7@$3m#6#3pk02ec$ci@0fsi&ru@e253h^z@!1j(g2!s^$z
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+LOGIN_URL = '/login/'
 ALLOWED_HOSTS = []
 
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework.authtoken',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'movie_rec.wsgi.application'
 
+AUTHENTICATION_BACKENDS = [
+    'landing_page.backends.CustomUserBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
