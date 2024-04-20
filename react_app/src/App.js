@@ -4,9 +4,9 @@ import Home from './pages/Home';
 import NetFlixShow from './pages/NetFlixShow';
 import './App.css';
 import Footer from './components/Footer/Footer';
-import Signin from './Signin';
-import Signup from './Signup';
-import Questionnaire from './Questionnaire';
+import Signin from './components/Auth/Signin';
+import Signup from './components/Auth/Signup';
+import Questionnaire from './components/Questionnaire/Questionnaire';
 
 function App() {
   return (

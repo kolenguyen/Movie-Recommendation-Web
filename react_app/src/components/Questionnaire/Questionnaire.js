@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Style.css';
+import './Questionnaire.css';
 import axios from 'axios';
 
 const genresOptions = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Romance', 'Sci-Fi', 'Thriller'];

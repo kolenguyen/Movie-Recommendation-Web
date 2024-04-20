@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import './Style.css';
+import './Auth.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const Signup = () => {
+const SignIn = ({ toggleForm }) => {
   const navigate = useNavigate();
 
   // State variables for form inputs and validation
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
@@ -15,10 +14,6 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name.trim()) {
-      setErrors({ name: 'Name is required' });
-      return;
-    }
     if (!email.trim()) {
       setErrors({ email: 'Email is required' });
       return;
@@ -28,7 +23,6 @@ const Signup = () => {
       return;
     }
 
-    // Additional email validation using regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setErrors({ email: 'Invalid email format' });
@@ -36,16 +30,15 @@ const Signup = () => {
     }
 
     try {
-        const response = await axios.post('http://localhost:8000/signup/', {
+        const response = await axios.post('http://localhost:8000/login/', {
             username: email,
             password: password
         });
-        console.log('Signup successful:', response.data);
+        console.log('Login successful:', response.data);
         localStorage.setItem('token', response.data.token);
-        // Redirect to questionnaire route upon successful validation
-        navigate('/questionnaire');
+        navigate('/'); 
     } catch (error) {
-        console.error('Signup failed:', error);
+        console.error('Login failed:', error);
         window.alert('Invalid username or password. Please try again.');
         setEmail('');
         setPassword('');
@@ -54,16 +47,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="signup-container showcase">
-      <form className="signup-form" onSubmit={handleSubmit}>
-        <h2>Sign Up</h2>
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        {errors.name && <p className="error-message">{errors.name}</p>}
+    <div className="signin-container showcase">
+      <form className="signin-form" onSubmit={handleSubmit}>
+        <h2>Sign In</h2>
         <input
           type="text"
           placeholder="Email"
@@ -78,13 +64,13 @@ const Signup = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         {errors.password && <p className="error-message">{errors.password}</p>}
-        <button type="submit">SIGN UP</button>
-        <Link to="/signin">
-          Already have an account? Sign in now.
+        <button type="submit">SIGN IN</button>
+        <Link to="/signup">
+          New user? Sign up now.
         </Link>
       </form>
     </div>
   );
 };
 
-export default Signup;
+export default SignIn;
