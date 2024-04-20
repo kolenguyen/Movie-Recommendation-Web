@@ -11,7 +11,7 @@ function App() {
       <div className="App">
         <Routes> 
           <Route exact path='/' element={<Home />} /> 
-          <Route path="/netflix-show" element ={<NetFlixShow />}/>
+          <Route path="/homepage" element ={<NetFlixShow />}/>
         </Routes>
         <Footer />
       </div>
