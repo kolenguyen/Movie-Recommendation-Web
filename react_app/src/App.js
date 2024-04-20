@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Import 'Rout
 import Home from './pages/Home';
 import './App.css';
 import Footer from './components/Footer/Footer';
+import Signin from './Signin';
+import Signup from './Signup';
+import Questionnaire from './Questionnaire';
 
 function App() {
   return (
@@ -10,6 +13,10 @@ function App() {
       <div className="App">
         <Routes> 
           <Route exact path='/' element={<Home />} /> 
+          <Route path='/signin' element={<Signin />} /> 
+          <Route path='/signup' element={<Signup />} /> 
+          <Route path='/questionnaire' element={<Questionnaire />} /> 
+
         </Routes>
         <Footer />
       </div>
