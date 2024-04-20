@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Import 'Routes' instead of 'Switch'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
 import Home from './pages/Home';
+import NetFlixShow from './pages/NetFlixShow';
 import './App.css';
 import Footer from './components/Footer/Footer';
 
@@ -10,6 +11,7 @@ function App() {
       <div className="App">
         <Routes> 
           <Route exact path='/' element={<Home />} /> 
+          <Route path="/homepage" element ={<NetFlixShow />}/>
         </Routes>
         <Footer />
       </div>
