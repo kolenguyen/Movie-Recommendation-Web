@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Style.css';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const SignIn = ({ toggleForm }) => {
   const navigate = useNavigate();
@@ -10,11 +11,9 @@ const SignIn = ({ toggleForm }) => {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!email.trim()) {
       setErrors({ email: 'Email is required' });
       return;
@@ -30,8 +29,21 @@ const SignIn = ({ toggleForm }) => {
       return;
     }
 
-    // Redirect to dashboard route upon successful validation
-    navigate('/');
+    try {
+        const response = await axios.post('http://localhost:8000/login/', {
+            username: email,
+            password: password
+        });
+        console.log('Login successful:', response.data);
+        localStorage.setItem('token', response.data.token);
+        navigate('/'); 
+    } catch (error) {
+        console.error('Login failed:', error);
+        window.alert('Invalid username or password. Please try again.');
+        setEmail('');
+        setPassword('');
+    }
+
   };
 
   return (

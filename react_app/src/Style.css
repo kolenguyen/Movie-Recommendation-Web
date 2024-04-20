@@ -12,7 +12,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: 100vh; */
   }
   
   .signin-form {
@@ -47,7 +46,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: 100vh; */
   }
   
   .signup-form {

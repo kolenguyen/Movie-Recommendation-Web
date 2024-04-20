@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import './Style.css';
+import axios from 'axios';
 
 const genresOptions = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Romance', 'Sci-Fi', 'Thriller'];
 
 const ratingOptions = [
   { value: 0, label: 'Select IMDb Rating' },
+  { value: 1, label: '1+' },
+  { value: 2, label: '2+' },
+  { value: 3, label: '3+' },
+  { value: 4, label: '4+' },
   { value: 5, label: '5+' },
   { value: 6, label: '6+' },
   { value: 7, label: '7+' },
@@ -32,27 +37,16 @@ const Questionnaire = () => {
   };
 
   const handleSubmit = async () => {
-    // Prepare data to send to backend API
     const data = {
       genres: selectedGenres,
       rating: selectedRating,
     };
 
     try {
-      // Make API call to backend
-      const response = await fetch('YOUR_BACKEND_API_URL', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
+        const response = await axios.post('http://localhost:8000/userpreferences/', data);
       if (response.ok) {
-        // Handle successful response (e.g., show success message)
         console.log('Preferences submitted successfully!');
       } else {
-        // Handle error response from backend
         console.error('Failed to submit preferences');
       }
     } catch (error) {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Style.css';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -11,11 +12,9 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!name.trim()) {
       setErrors({ name: 'Name is required' });
       return;
@@ -36,8 +35,22 @@ const Signup = () => {
       return;
     }
 
-    // Redirect to questionnaire route upon successful validation
-    navigate('/questionnaire');
+    try {
+        const response = await axios.post('http://localhost:8000/signup/', {
+            username: email,
+            password: password
+        });
+        console.log('Signup successful:', response.data);
+        localStorage.setItem('token', response.data.token);
+        // Redirect to questionnaire route upon successful validation
+        navigate('/questionnaire');
+    } catch (error) {
+        console.error('Signup failed:', error);
+        window.alert('Invalid username or password. Please try again.');
+        setEmail('');
+        setPassword('');
+    }
+
   };
 
   return (
