@@ -46,7 +46,7 @@ const Questionnaire = () => {
 
     try {
           const response = await axios.post('http://localhost:8000/usermovies/', data, { withCredentials: true });
-        navigate('/homepage'); 
+          navigate('/homepage'); 
       if (response.ok) {
         console.log('Preferences submitted successfully!');
       } else {
