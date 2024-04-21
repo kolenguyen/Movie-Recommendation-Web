@@ -152,6 +152,7 @@ class returnMoviesFromUserGenreView(APIView):
         print(imdb)
         # if request.user.is_authenticated:
         username = request.session.get('username')
+        print(username)
         user = User.objects.get(username=username)
         print(user)
         if user is not None:
@@ -162,6 +163,76 @@ class returnMoviesFromUserGenreView(APIView):
             user.imdb = imdb
             user.save()
             
+            try:
+                movies = Movie.objects.all() 
+                if genres and imdb is None:
+                    return Response({'error': 'Genre and imdb not found'}, status=status.HTTP_404_NOT_FOUND)
+                if imdb is not None:
+                    movies = movies.filter(imdb__gt=imdb)
+                for genre in genres:
+                    print(genre)
+                    movies = movies.filter(genre__name=genre)
+
+                print(movies)
+                # current_movie = Movie.objects.filter(title=title).first()
+                # genres = [genre.name for genre in current_movie.genre.all()]
+                # print(genres)
+                # movies = Movie.objects.all() 
+                # for genre in genres:
+                    # movies = movies.filter(genre__name=genre)
+
+                # Serialize movie data with genre details
+                returned_movies = []
+                unique_movies = set()
+                for movie in movies:
+                    movie_key = (movie.title, movie.director)
+                    if movie_key not in unique_movies:
+                        movie_data = {
+                            'title': movie.title,
+                            'url': movie.poster,
+                            'director': movie.director,
+                            'imdb': movie.imdb,
+                            'overview': movie.overview,
+                            'year': movie.year,
+                            'genres': [genre.name for genre in movie.genre.all()]  # Get genre names associated with the movie
+                        }
+                        returned_movies.append(movie_data)
+                        
+                        # Add the movie title to the set of seen titles
+                        unique_movies.add(movie_key)
+
+                return Response({'success': 'UserGenre updated successfully',
+                                 'movies':returned_movies}, status=status.HTTP_200_OK)
+            except Movie.DoesNotExist:
+                return Response({'success': 'UserGenre updated successfully',
+                                 'error': 'But no movies found'}, status=status.HTTP_404_NOT_FOUND)
+            
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND) 
+
+    def get(self, request):
+        authentication_classes = [SessionAuthentication]  # Use SessionAuthentication or another DRF authentication class
+        permission_classes = [IsAuthenticated]  # Require authentication for this API view
+
+        # data = json.loads(request.body)
+        # genre_names = data.get('genres')
+        # imdb = data.get('rating')
+        # print(genre_names)
+        # print(imdb)
+        # if request.user.is_authenticated:
+        username = request.session.get('username')
+        user = User.objects.get(username=username)
+        print(user)
+        if user is not None:
+            # user.favorite_genres.clear() 
+            # genres = Genre.objects.filter(name__in=genre_names)
+            # user.favorite_genres.add(*genres)
+            
+            # user.imdb = imdb
+            # user.save()
+            genres = user.favorite_genres.all()
+            print("Genres", genres)
+            imdb = user.imdb
+            print("Imdb rating", imdb)
             try:
                 movies = Movie.objects.all() 
                 if genres and imdb is None:
