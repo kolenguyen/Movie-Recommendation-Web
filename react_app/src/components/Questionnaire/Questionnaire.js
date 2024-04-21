@@ -60,7 +60,7 @@ const Questionnaire = () => {
             <h2>Movie Preferences Questionnaire</h2>
 
             <div className="genre-options">
-            <p>Select up to 3 genres you like:</p>
+            <h4>Select up to 3 genres you like:</h4>
             <div className="genre-tags">
                 {genresOptions.map((genre) => (
                 <span
@@ -75,7 +75,7 @@ const Questionnaire = () => {
             </div>
 
             <div className="rating-dropdown">
-            <p>Select minimum IMDb rating:</p>
+            <h4>Select minimum IMDb rating:</h4>
             <select value={selectedRating} onChange={handleRatingSelect}>
                 {ratingOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -86,8 +86,8 @@ const Questionnaire = () => {
             </div>
 
             <div className="selected-info">
-            <p>Selected Genres: {selectedGenres.join(', ') || 'None'}</p>
-            <p>Minimum IMDb Rating: {selectedRating || 'Not selected'}</p>
+            <h4>Selected Genres: {selectedGenres.join(', ') || 'None'}</h4>
+            <h4>Minimum IMDb Rating: {selectedRating || 'Not selected'}</h4>
 
             <button className="submit-button" onClick={handleSubmit}>
             Submit Preferences
