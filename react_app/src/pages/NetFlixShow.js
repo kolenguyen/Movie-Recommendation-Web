@@ -4,53 +4,47 @@ import api from "../api/api";
 import Nav from "../components/Nav/Nav";
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import MovieGrid from "../components/MovieGrid/MovieGrid";
 
 const getRecommendedMovies = async () => {
   try {
-        const response = await axios.get('http://localhost:8000/usermovies/', { withCredentials: true });
-        console.log(response);
-        return response;
-        // navigate('/homepage'); 
-    if (response.ok) {
-      console.log('Preferences submitted successfully!');
+    const response = await axios.get('http://localhost:8000/usermovies/', { withCredentials: true });
+    if (response.status === 200) {
+    console.log('Preferences fetched successfully!');
+    return response.data; // Return only the data from the response
     } else {
-      console.error('Failed to submit preferences');
+     console.error('Failed to fetch recommended movies');
+      return []; // Return an empty array in case of failure
     }
   } catch (error) {
-    console.error('Error submitting preferences:', error);
+   console.error('Error fetching recommended movies:', error);
+   return []; // Return an empty array in case of error
   }
 };
 
-const NetFlixShow = () => {
-  // State to store the recommended movies
-  const [recommendedMovies, setRecommendedMovies] = useState([]);
 
-  // Fetch recommended movies right after the component mounts
+const NetFlixShow = () => {
+  const [movies, setMovies] = useState([]);
+
   useEffect(() => {
-    const fetchRecommendedMovies = async () => {
+    const fetchMovies = async () => {
       try {
-        const response = await getRecommendedMovies();
-        // Assuming the response data is the array of recommended movies
-        // Adjust the below line based on the actual structure of your response
-        setRecommendedMovies(response.data);
+        const response = await axios.get('http://localhost:8000/usermovies/', { withCredentials: true });
+        setMovies(response.data.movies);
       } catch (error) {
-        console.error('Error fetching recommended movies:', error);
+        console.error('Error fetching movies:', error);
       }
     };
 
-    fetchRecommendedMovies();
-  }, []); // The empty array ensures this effect runs only once after the initial render
+    fetchMovies();
+  }, []);
 
   return (
-    <div>
+    <div>  
       <Nav />
       <Banner />
-      
-      {/* Conditionally render the Row for recommended movies if we have any */}
-      {recommendedMovies.length > 0 && (
-        <Row title="Recommended Movies" fetchUrl={recommendedMovies} isLargeRow />
-      )}
-
+      <Row title="Recommended Movies" />
+      <MovieGrid  movies={movies} />
       <Row title="Movies that you may also enjoy" fetchUrl={api.fetchNetflixOriginals} isLargeRow />
       <Row title="Trending Now" fetchUrl={api.fetchTrending} />
       <Row title="Top Rated" fetchUrl={api.fetchTopRated} />
@@ -64,4 +58,7 @@ const NetFlixShow = () => {
 };
 
 export default NetFlixShow;
+
+
+
   
