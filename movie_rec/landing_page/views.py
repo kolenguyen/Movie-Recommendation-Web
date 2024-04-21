@@ -8,7 +8,7 @@ from .serializers import UserLoginSerializer
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 import json
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from .models import Movie, Genre, User
@@ -65,6 +65,7 @@ class UserSignUpView(APIView):
                     password = password,
                     email=  username)
             user.save()
+            request.session['username'] = username
 
         except IntegrityError as e:
                 return Response({'detail': 'Please enter a different email!'}, status=status.HTTP_400_BAD_REQUEST)
@@ -72,6 +73,15 @@ class UserSignUpView(APIView):
     
         return Response({'detail':'Successfully registered'})
         # return JsonResponse({'detail':'Successfully registered'})
+
+class UserLogOutView(APIView):
+    def post(self, request, format=None):
+        try:
+            logout(request)
+            request.session['username'] = ""
+            return Response({'message': 'Logged out successfully.'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class returnAllUserView(APIView):
     def get(self, request, format=None):

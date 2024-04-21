@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./Nav.css";
 import { Link } from "react-router-dom";
 import NetFlixAvatar from "../../images/NetflixAvatar.png";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Nav = () => {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false); // State to handle the dropdown visibility
 
@@ -25,6 +28,23 @@ const Nav = () => {
 
   const toggleDropdown = () => setDropdownVisible(!dropdownVisible);
 
+  const handlelogOut = async (e) => {
+    console.log('Inside handle logout');
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        'http://localhost:8000/logout/', 
+        {},
+        { withCredentials: true }
+      );
+      console.log('Logout successful');
+      navigate('/'); 
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
   return (
     <div className={`nav ${show ? "nav-black" : ""}`}>
       <Link to="/homepage" className="nav-logo">
@@ -35,7 +55,7 @@ const Nav = () => {
         {dropdownVisible && (
           <div className="dropdown-menu">
             <Link to="/questionnaire" className="dropdown-item">Watch Preferences</Link>
-            <Link to="/logout" className="dropdown-item">Logout</Link>
+            <div className="dropdown-item" onClick={handlelogOut}>Logout</div>
           </div>
         )}
       </div>

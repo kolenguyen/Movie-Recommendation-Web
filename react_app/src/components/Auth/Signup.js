@@ -39,7 +39,9 @@ const Signup = () => {
         const response = await axios.post('http://localhost:8000/signup/', {
             username: email,
             password: password
-        });
+        },
+        { withCredentials: true }
+      );
         console.log('Signup successful:', response.data);
         localStorage.setItem('token', response.data.token);
         // Redirect to questionnaire route upon successful validation
