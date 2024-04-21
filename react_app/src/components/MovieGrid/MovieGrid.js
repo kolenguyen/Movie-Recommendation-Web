@@ -1,30 +1,13 @@
-// MovieGrid.js
-
-/*import React from 'react';
-import './MovieGrid.css';
-
-const MovieGrid = ({ movies }) => {
-  return (
-    <div className="movie-grid">
-      {movies.map(movie => (
-        <div key={movie.title} className="movie-item">
-          <img src={movie.url} alt={movie.title} />
-          <p>{movie.title}</p>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-export default MovieGrid;
-*/
 import React from "react";
 import "./MovieGrid.css";
 
 const MovieGrid = ({ movies }) => {
+  // Get the top 15 movies
+  const topMovies = movies.slice(0, 15);
+
   return (
     <div className="movie-grid">
-      {movies.map((movie, index) => (
+      {topMovies.map((movie, index) => (
         <div className="movie" key={index}>
           <img src={movie.url} alt={movie.title} />
           <div className="movie-info">

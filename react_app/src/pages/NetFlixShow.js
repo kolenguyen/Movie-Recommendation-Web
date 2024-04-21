@@ -46,7 +46,6 @@ const NetFlixShow = () => {
       <Row title="Recommended Movies" />
       <MovieGrid  movies={movies} />
       <Row title="Movies that you may also enjoy" fetchUrl={api.fetchNetflixOriginals} isLargeRow />
-      <Row title="Movies" fetchUrl={movies} isLargeRow />
       <Row title="Trending Now" fetchUrl={api.fetchTrending} />
       <Row title="Top Rated" fetchUrl={api.fetchTopRated} />
       <Row title="Action Movies" fetchUrl={api.fetchActionMovies} />
