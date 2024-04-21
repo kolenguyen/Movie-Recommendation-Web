@@ -33,9 +33,11 @@ class UserLoginView(APIView):
             print(user)
             if user:
                 login(request, user)
+                request.session['username'] = username
                 # token = Token.objects.create(user=user)
                 # token = Token.objects.create(user=...)
                 # print(token.key)
+
                 return Response({'Success': "Valid credentials"}, status = status.HTTP_200_OK)
             else:
                 return Response({'error': 'Invalid credentials - user not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -43,6 +45,7 @@ class UserLoginView(APIView):
 
 class UserSignUpView(APIView):
     def post(self, request, format = None):
+        print(request.data)
         # data = json.loads(request.body)
         # username = data.get('username')
         # password = data.get('password')
@@ -85,7 +88,7 @@ class returnAllUserView(APIView):
         return Response(users_data, status=status.HTTP_200_OK)
     
 class returnMoviesFromGenreView(APIView):
-    def get(self, request):
+    def post(self, request):
         # movies = models.Movie.objects.all()
         # print(request.body)
         data = json.loads(request.body)
@@ -148,9 +151,10 @@ class returnMoviesFromUserGenreView(APIView):
         print(genre_names)
         print(imdb)
         # if request.user.is_authenticated:
-        user = request.user
+        username = request.session.get('username')
+        user = User.objects.get(username=username)
+        print(user)
         if user is not None:
-            print(user)
             user.favorite_genres.clear() 
             genres = Genre.objects.filter(name__in=genre_names)
             user.favorite_genres.add(*genres)

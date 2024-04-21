@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './Questionnaire.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const genresOptions = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Romance', 'Sci-Fi', 'Thriller'];
+const genresOptions = ['Sport', 'Film-Noir', 'Musical', 'Horror', 'Music', 'Mystery', 'War', 'Family', 'Animation', 'Thriller', 'Comedy', 'Fantasy', 'Western', 'Romance', 'Sci-Fi', 'History', 'Biography', 'Adventure', 'Action', 'Crime', 'Drama'];
 
 const ratingOptions = [
   { value: 0, label: 'Select IMDb Rating' },
@@ -19,6 +20,7 @@ const ratingOptions = [
 ];
 
 const Questionnaire = () => {
+  const navigate = useNavigate();
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedRating, setSelectedRating] = useState(0);
 
@@ -43,7 +45,8 @@ const Questionnaire = () => {
     };
 
     try {
-        const response = await axios.post('http://localhost:8000/userpreferences/', data);
+          const response = await axios.post('http://localhost:8000/usermovies/', data, { withCredentials: true });
+        navigate('/homepage'); 
       if (response.ok) {
         console.log('Preferences submitted successfully!');
       } else {
