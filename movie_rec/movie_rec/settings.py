@@ -44,6 +44,15 @@ INSTALLED_APPS = [
     'django_extensions',
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',  # Add your React frontend domain here
+]
+
+CORS_ALLOW_HEADERS = [
+    'Authorization',
+    'Content-Type',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -55,6 +64,14 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        # Other authentication classes...
+    ],
+    # Other settings...
+}
 
 ROOT_URLCONF = 'movie_rec.urls'
 
@@ -136,3 +153,4 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True

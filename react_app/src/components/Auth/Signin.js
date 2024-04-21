@@ -33,10 +33,12 @@ const SignIn = ({ toggleForm }) => {
         const response = await axios.post('http://localhost:8000/login/', {
             username: email,
             password: password
-        });
+          }, 
+          { withCredentials: true }
+      );
         console.log('Login successful:', response.data);
         localStorage.setItem('token', response.data.token);
-        navigate('/'); 
+        navigate('/homepage'); 
     } catch (error) {
         console.error('Login failed:', error);
         window.alert('Invalid username or password. Please try again.');
