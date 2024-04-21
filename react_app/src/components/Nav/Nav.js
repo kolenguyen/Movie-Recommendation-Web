@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Nav.css";
 import { Link } from "react-router-dom";
-import NetFlixLogo from "../../images/NetFlixLogo.png";
 import NetFlixAvatar from "../../images/NetflixAvatar.png";
 
 const Nav = () => {
@@ -24,13 +23,12 @@ const Nav = () => {
     };
   }, []);
 
-  // Toggle dropdown visibility
   const toggleDropdown = () => setDropdownVisible(!dropdownVisible);
 
   return (
     <div className={`nav ${show ? "nav-black" : ""}`}>
-      <Link to="/">
-        <img src={NetFlixLogo} className="nav-logo" alt="Netflix Logo" />
+      <Link to="/homepage" className="nav-logo">
+        MovieRecommender
       </Link>
       <div className="nav-item-container" onClick={toggleDropdown}>
         <img src={NetFlixAvatar} className="nav-avatar" alt="Avatar" />
