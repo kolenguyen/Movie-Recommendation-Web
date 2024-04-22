@@ -36,7 +36,7 @@ const Signup = () => {
     }
 
     try {
-        const response = await axios.post('http://localhost:8000/signup/', {
+        const response = await axios.post('https://pfwwebdev-6b47cef20bd2.herokuapp.com/signup/', {
             username: email,
             password: password
         },
