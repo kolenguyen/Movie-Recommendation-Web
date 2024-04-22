@@ -34,7 +34,7 @@ const Nav = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:8000/logout/', 
+        'https://pfwwebdev-6b47cef20bd2.herokuapp.com/logout/', 
         {},
         { withCredentials: true }
       );
