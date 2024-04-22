@@ -29,7 +29,7 @@ const NetFlixShow = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/usermovies/', { withCredentials: true });
+        const response = await axios.get('https://pfwwebdev-6b47cef20bd2.herokuapp.com/usermovies/', { withCredentials: true });
         setMovies(response.data.movies);
       } catch (error) {
         console.error('Error fetching movies:', error);
